@@ -12,9 +12,9 @@ namespace TampaBayCoders.Controllers
 	public class AccountController : Controller
 	{
 		// Login with Auth0
-		public IActionResult Login()
+		public IActionResult Login(string returnUrl = "/")
 		{
-			return new ChallengeResult("Auth0", new AuthenticationProperties() { RedirectUri = "/" });
+			return new ChallengeResult("Auth0", new AuthenticationProperties() { RedirectUri = returnUrl });
 		}
 
 		// Logout through Auth0
