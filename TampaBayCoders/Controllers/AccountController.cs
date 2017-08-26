@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TampaBayCoders.Controllers
 {
@@ -24,6 +25,13 @@ namespace TampaBayCoders.Controllers
 				RedirectUri = Url.Action("Index", "Home")
 			});
 			await HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+		}
+
+		// View Your Own Claims
+		[Authorize]
+		public IActionResult Claims()
+		{
+			return View();
 		}
 	}
 }
