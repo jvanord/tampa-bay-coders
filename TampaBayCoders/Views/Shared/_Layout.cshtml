@@ -56,6 +56,7 @@
 			</div>
 		</div>
 	</nav>
+	@RenderSection("Carousel", required: false)
 	<div class="container body-content">
 		@RenderBody()
 		<hr />
@@ -63,7 +64,6 @@
 			<p>&copy; 2017 - <a href="http://www.indasysllc.com">Indasys LLC</a></p>
 		</footer>
 	</div>
-
 	<environment names="Development">
 		<script src="~/lib/jquery/dist/jquery.js"></script>
 		<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -84,7 +84,6 @@
 		</script>
 		<script src="~/js/site.min.js" asp-append-version="true"></script>
 	</environment>
-
 	@RenderSection("Scripts", required: false)
 </body>
 </html>
