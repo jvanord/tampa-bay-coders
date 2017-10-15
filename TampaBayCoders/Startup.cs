@@ -37,6 +37,7 @@ namespace TampaBayCoders
 
 			// Add Framework Services
 			services.AddMvc();
+			services.AddRouting(option => option.LowercaseUrls = true);
 
 			// Enable IOptions Injection (see Configure method)
 			services.AddOptions();
@@ -60,7 +61,7 @@ namespace TampaBayCoders
 			}
 			else
 			{
-				app.UseExceptionHandler("/Home/Error");
+				app.UseExceptionHandler("/home/error");
 			}
 
 			// Configure Static File Serving
