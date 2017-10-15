@@ -41,7 +41,7 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-					<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+					<li><a asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="about">About</a></li>
 					<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -58,8 +58,8 @@
 		</div>
 	</nav>
 	@RenderBody()
-	<footer>
-		<p>&copy; 2017 - <a href="http://www.indasysllc.com">Indasys LLC</a></p>
+	<footer class="theme-inverse">
+		<p>&copy; @DateTime.Now.Year - <a href="http://www.indasysllc.com" target="_blank">Indasys LLC</a></p>
 	</footer>
 	<environment names="Development">
 		<script src="~/lib/jquery/dist/jquery.js"></script>
