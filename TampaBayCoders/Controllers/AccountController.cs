@@ -6,11 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace TampaBayCoders.Controllers
 {
 	public class AccountController : Controller
 	{
+		private Services.ProfileService profileService;
+		public AccountController(IOptions<CosmosDbSettings> cosmosDbSettings)
+		{
+			profileService = new Services.ProfileService(cosmosDbSettings.Value);
+		}
+
 		// Login with Auth0
 		public IActionResult Login(string returnUrl = "/")
 		{
