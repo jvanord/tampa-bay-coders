@@ -28,19 +28,19 @@ textarea { max-width: 280px; }
 @import 'variables.less';
 @theme-color: @navbar-inverse-bg;
 
-.theme-color {
-	h1, h2, h3, h4, h5, h6, b, strong { color: @theme-color; }
-}
-
-.theme-inverse { background-color: @theme-color; background-color: @theme-color; color: white;
-	a { color: white; }
-}
-
-.theme-inverse-light { background-color: lighten(@theme-color, 35%);
-	h1, h2, h3, h4, h5, h6, b, strong { color: @theme-color; }
+div, section {
+	&.theme { padding: 4em 0; font-size: 24px; line-height: 1.75em;
+		h1, h2 { color: @theme-color; text-align: center; font-size: 36px; text-transform: uppercase; margin-bottom: 1em; }
+		h3, h4, h5, h6, b, strong { color: @theme-color; }
+		&.inverse { background-color: @theme-color; background-color: @theme-color; color: white;
+			a { color: white; }
+		}	
+		&.inverse-light { background-color: lighten(@theme-color, 35%);
+			h1, h2, h3, h4, h5, h6, b, strong { color: @theme-color; }
+		}
+	}
 }
 
 #topnav .navbar-header { background: url(/images/logo-inverse-50.png) left center no-repeat; padding-left: 55px; }
 
 footer { text-align: right; padding: 1em; border-top: 1px solid #ccc; }
-

@@ -1,16 +1,13 @@
-﻿@{
-	ViewData["Title"] = "Home Page";
-}
-
-@section Styles{ 
+﻿@section Styles{
 	<style>
 		.carousel-caption { bottom: unset; top: 100px; background-color: rgba(0,0,0,.3); border-radius: 2em; padding-left: 1em; padding-right: 1em; }
 			.carousel-caption h2 { font-size: 48px; }
 			.carousel-caption p { font-size: 16px; }
-		section { padding: 4em 0; font-size: 24px; line-height: 1.75em; text-align: justify; }
-		section h2 { text-align: center; font-size: 36px; text-transform: uppercase; margin-bottom: 1em; }
-			section ul { padding-left: 0; }
+		section { text-align: justify; }
 			section li { list-style-position: inside; }
+		@@media screen and (max-width: 768px){
+			section ul { padding-left: 0; }
+		}
 	</style>
 }
 
@@ -65,18 +62,18 @@
 	</a>
 </div>
 
-<section id="about" class="theme-color">
+<section id="about" class="theme">
 	<div class="container">
 		<h2>Who We Are</h2>
 		<p>
 			Tampa Bay Coders is a community of professional, amateur, and aspiring software developers in the Tampa Bay Area.
-			We live and work in cities like Tampa, Saint Petersburg, Clearwater, Brandon, Largo, and more.		
+			We live and work in cities like Tampa, Saint Petersburg, Clearwater, Brandon, Largo, and more.
 			This is where we share information with each other and the wider community.
 		</p>
 	</div>
 </section>
 
-<section id="support" class="theme-inverse-light">
+<section id="support" class="theme inverse-light">	
 	<div class="container">
 		<h2>Supporting the Coder Community</h2>
 		<p>
@@ -93,13 +90,13 @@
 	</div>
 </section>
 
-<section id="opportunities" class="theme-color">
+<section id="opportunities" class="theme">
 	<div class="container">
 		<h2>Opportunities</h2>
 		<p>
 			Developers can find more opportunities by creating a profile on Tampa Bay Coders.
 			Whether you're looking for work or just want to be known in the community.
-			Whether you're available for a full-time job or a freelance contract. 
+			Whether you're available for a full-time job or a freelance contract.
 			Your profile can show potential employers and clients who you are and what you can do.
 		</p>
 		<ul>
@@ -110,7 +107,7 @@
 	</div>
 </section>
 
-<section id="fellowship" class="theme-inverse-light"">
+<section id="fellowship" class="theme inverse-light">
 	<div class="container">
 		<h2>Get Together</h2>
 		<p>
@@ -126,7 +123,7 @@
 	</div>
 </section>
 
-<section id="find" class="theme-color">
+<section id="find" class="theme">
 	<div class="container">
 		<h2>Find a Coder</h2>
 		<p>
