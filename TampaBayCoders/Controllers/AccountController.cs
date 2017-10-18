@@ -40,5 +40,19 @@ namespace TampaBayCoders.Controllers
 		{
 			return View();
 		}
+
+		[Authorize]
+		public async Task<IActionResult> Test()
+		{
+			var profile = await profileService.Create(User);
+			//var profile = await profileService.Create(new Services.Profile
+			//{
+			//	DisplayName = "test display name",
+			//	Summary = "test summary",
+			//	UserId = User.Identity.Name,
+			//	Email = User.Claims.FirstOrDefault(c => c.Type == "profile")?.Value
+			//});
+			return Content("Created Profile " + profile.UserId);
+		}
 	}
 }
