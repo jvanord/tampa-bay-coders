@@ -13,10 +13,14 @@ namespace TampaBayCoders.Controllers
 	public class AccountController : Controller
 	{
 		private Services.ProfileService profileService;
+		private CosmosDbSettings connectionSettings;
+
 		public AccountController(IOptions<CosmosDbSettings> cosmosDbSettings)
 		{
-			profileService = new Services.ProfileService(cosmosDbSettings.Value);
+			connectionSettings = cosmosDbSettings.Value;
 		}
+
+		protected Services.ProfileService ProfileService { get { if (profileService == null) profileService = new Services.ProfileService(connectionSettings); return profileService; } }
 
 		// Login with Auth0
 		public IActionResult Login(string returnUrl = "/")
@@ -44,7 +48,7 @@ namespace TampaBayCoders.Controllers
 		[Authorize]
 		public async Task<IActionResult> Test()
 		{
-			var profile = await profileService.Create(User);
+			var profile = await ProfileService.Create(User);
 			//var profile = await profileService.Create(new Services.Profile
 			//{
 			//	DisplayName = "test display name",

@@ -18,6 +18,7 @@ namespace TampaBayCoders.Services
 			ConnectionSettings = settings;
 			DocumentDb = new DocumentClient(new Uri(settings.Endpoint), settings.Key);
 			_databaseReadyTask = Initialize();
+			// System.UriFormatException
 		}
 
 		protected CosmosDbSettings ConnectionSettings { get; private set; }
