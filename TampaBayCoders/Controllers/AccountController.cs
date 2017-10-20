@@ -10,17 +10,12 @@ using Microsoft.Extensions.Options;
 
 namespace TampaBayCoders.Controllers
 {
-	public class AccountController : Controller
+	public class AccountController : ControllerBase
 	{
+		public AccountController(IOptions<CosmosDbSettings> cosmosDbSettings) : base(cosmosDbSettings) { }
+
 		private Services.ProfileService profileService;
-		private CosmosDbSettings connectionSettings;
-
-		public AccountController(IOptions<CosmosDbSettings> cosmosDbSettings)
-		{
-			connectionSettings = cosmosDbSettings.Value;
-		}
-
-		protected Services.ProfileService ProfileService { get { if (profileService == null) profileService = new Services.ProfileService(connectionSettings); return profileService; } }
+		protected Services.ProfileService ProfileService { get { if (profileService == null) profileService = new Services.ProfileService(ConnectionSettings); return profileService; } }
 
 		// Login with Auth0
 		public IActionResult Login(string returnUrl = "/")
