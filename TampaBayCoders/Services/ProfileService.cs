@@ -10,43 +10,24 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;
+using TampaBayCoders.Data;
 
 namespace TampaBayCoders.Services
 {
 	public class ProfileService : CosmosDbServiceBase
 	{
+		private ProfileService(CosmosDbConnection dataConnection) : base(dataConnection) { }
 
-		public ProfileService(CosmosDbSettings settings) : base(settings) { }
-
-		protected override async Task Initialize()
-		{
-			if (DatabaseReady) return;
-			try
-			{
-				var databaseUri = UriFactory.CreateDatabaseUri(ConnectionSettings.DatabaseId);
-				var database = await DocumentDb.CreateDatabaseIfNotExistsAsync(new Database { Id = ConnectionSettings.DatabaseId });
-				var collection = await DocumentDb.CreateDocumentCollectionIfNotExistsAsync(databaseUri, new DocumentCollection { Id = ConnectionSettings.ProfileCollectionId });
-			}
-			catch (DocumentClientException ex)
-			{
-				// log data error
-			}
-			catch(Exception ex)
-			{
-				// log generic error
-			}
-		}
+		public static ProfileService Connect(CosmosDbConnection dataConnection) => new ProfileService(dataConnection);
 
 		public async Task<Profile> Create(Profile profile)
 		{
-			await Initialize(); // don't call a database that isn't ready
-			var collectionUri = UriFactory.CreateDocumentCollectionUri(ConnectionSettings.DatabaseId, ConnectionSettings.ProfileCollectionId);
-			var response = await DocumentDb.CreateDocumentAsync(collectionUri, profile);
+			var collectionUri = await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
+			var response = await DataConnection.DocumentClient.CreateDocumentAsync(collectionUri, profile);
 			return profile;
 		}
 
 		[Obsolete("Don't create an automatically generated profile that the user hasn't reviewed first.")]
-
 		internal async Task<Profile> Create(ClaimsPrincipal user)
 		{
 			var profile = new Profile
@@ -77,25 +58,25 @@ namespace TampaBayCoders.Services
 
 		public async Task<Profile> ReadAsync(string id)
 		{
-			await Initialize(); // don't call a database that isn't ready
+			await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
 			throw new NotImplementedException();
 		}
 
 		public async Task<Profile> UpdateAsync(Profile profile)
 		{
-			await Initialize(); // don't call a database that isn't ready
+			await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
 			throw new NotImplementedException();
 		}
 
 		public async Task DeleteAsync(string id)
 		{
-			await Initialize(); // don't call a database that isn't ready
+			await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
 			throw new NotImplementedException();
 		}
 
 		public async Task<List<Profile>> ListAsync(Expression<Func<Profile, bool>> predicate = null)
 		{
-			await Initialize(); // don't call a database that isn't ready
+			await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
 			throw new NotImplementedException();
 		}
 	}

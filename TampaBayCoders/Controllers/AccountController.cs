@@ -7,15 +7,13 @@ using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
+using TampaBayCoders.Services;
 
 namespace TampaBayCoders.Controllers
 {
 	public class AccountController : ControllerBase
 	{
 		public AccountController(IOptions<CosmosDbSettings> cosmosDbSettings) : base(cosmosDbSettings) { }
-
-		private Services.ProfileService profileService;
-		protected Services.ProfileService ProfileService { get { if (profileService == null) profileService = new Services.ProfileService(ConnectionSettings); return profileService; } }
 
 		// Login with Auth0
 		public IActionResult Login(string returnUrl = "/")
@@ -43,7 +41,7 @@ namespace TampaBayCoders.Controllers
 		[Authorize]
 		public async Task<IActionResult> Test()
 		{
-			var profile = await ProfileService.Create(User);
+			var profile = await ProfileService.Connect(SharedDataConnection).Create(User);
 			//var profile = await profileService.Create(new Services.Profile
 			//{
 			//	DisplayName = "test display name",

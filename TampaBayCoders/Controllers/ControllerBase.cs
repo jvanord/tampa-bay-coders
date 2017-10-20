@@ -5,19 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Options;
+using TampaBayCoders.Data;
 
 namespace TampaBayCoders.Controllers
 {
     public abstract class ControllerBase : Controller
     {
-		[Obsolete("Use Singleton Connection")]
-		protected CosmosDbSettings ConnectionSettings;
-
-		protected static DocumentClient DatabaseConnection { get; private set; }
+		protected static CosmosDbConnection SharedDataConnection { get; private set; }
 
 		public ControllerBase(IOptions<CosmosDbSettings> cosmosDbSettings)
 		{
-			ConnectionSettings = cosmosDbSettings.Value;
+			SharedDataConnection = CosmosDbConnection.Singleton(cosmosDbSettings.Value);
 		}
 	}
 }
