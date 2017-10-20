@@ -1,4 +1,4 @@
-﻿namespace TampaBayCoders
+﻿namespace TampaBayCoders.Configuration
 {
 	public class Auth0Settings
 	{

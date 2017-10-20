@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Options;
+using TampaBayCoders.Configuration;
 using TampaBayCoders.Data;
 
 namespace TampaBayCoders.Controllers
