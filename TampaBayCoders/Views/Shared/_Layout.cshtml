@@ -52,6 +52,7 @@
 					@if (User.Identity.IsAuthenticated)
 					{
 						<li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
+						<li><a asp-controller="Profile" asp-action="Index">Profile</a></li>
 					}
 					else
 					{
