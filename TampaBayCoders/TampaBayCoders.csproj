@@ -6,13 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\**" />
-    <Content Remove="Models\**" />
-    <EmbeddedResource Remove="Models\**" />
-    <None Remove="Models\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Services\ProfileService.cs" />
   </ItemGroup>
 
@@ -39,6 +32,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Account\" />
+    <Folder Include="Views\Profile\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />

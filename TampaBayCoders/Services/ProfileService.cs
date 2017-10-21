@@ -6,11 +6,13 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;
 using TampaBayCoders.Data;
+using TampaBayCoders.Models;
 
 namespace TampaBayCoders.Services
 {
@@ -19,6 +21,22 @@ namespace TampaBayCoders.Services
 		private ProfileService(CosmosDbConnection dataConnection) : base(dataConnection) { }
 
 		public static ProfileService Connect(CosmosDbConnection dataConnection) => new ProfileService(dataConnection);
+
+		public async Task<IAsyncEnumerable<Profile>> FindByUserNameAsync(string name)
+		{
+			var collectionUri = await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
+			var options = new FeedOptions { MaxItemCount = 1 };
+			var query = DataConnection.DocumentClient.CreateDocumentQuery<Profile>(collectionUri, options).Where(p => p.UserName == name);
+			return query.ToAsyncEnumerable(); // this will execute the query asynchronously
+		}
+
+		public async Task<Profile> FindByUserId(string userId)
+		{
+			var collectionUri = await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
+			var options = new FeedOptions { MaxItemCount = 1 };
+			var query = DataConnection.DocumentClient.CreateDocumentQuery<Profile>(collectionUri, options).Where(p => p.UserId == userId); ;
+			return await query.ToAsyncEnumerable().FirstOrDefault(); //; // this will execute the query asynchronously then get the first (hopefully only) result
+		}
 
 		public async Task<Profile> Create(Profile profile)
 		{
@@ -33,6 +51,7 @@ namespace TampaBayCoders.Services
 			var profile = new Profile
 			{
 				UserId = getClaim(user, true, "sub", "user_id", "nameidentifier"),
+				UserName = user.Identity.Name,
 				DisplayName = getClaim(user, true, "name", "nickname", "givenname"),
 				Email = getClaim(user, true, "email", "emailaddress"),
 				PhotoUrl = getClaim(user, false, "picture"),
@@ -79,41 +98,5 @@ namespace TampaBayCoders.Services
 			await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
 			throw new NotImplementedException();
 		}
-	}
-
-	public class Profile
-	{
-		[JsonProperty("user_id"), Required]
-		public string UserId { get; set; }
-
-		[JsonProperty("display_name"), Display(Name = "Display Name"), MaxLength(256)]
-		public string DisplayName { get; set; }
-
-		[JsonProperty("email")]
-		public string Email { get; set; }
-
-		[JsonProperty("photo_url")]
-		public string PhotoUrl { get; set; }
-
-		[JsonProperty("summary"), Display(Name = ""), MaxLength(256)]
-		public string Summary { get; set; }
-
-		[JsonProperty("linkedin_url")]
-		public string LinkedInUrl { get; set; }
-
-		[JsonProperty("facebook_url")]
-		public string FacebookUrl { get; set; }
-
-		[JsonProperty("stackoverflow_cv_url")]
-		public string StackOverflowCvUrl { get; set; }
-
-		[JsonProperty("github_url")]
-		public string GitHubUrl { get; set; }
-
-		[JsonProperty("twitter_handle")]
-		public string TwitterHandle { get; set; }
-
-		[JsonProperty("claims")]
-		public IEnumerable<KeyValuePair<string, string>> Claims { get; internal set; }
 	}
 }

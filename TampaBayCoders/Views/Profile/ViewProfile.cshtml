@@ -1,0 +1,86 @@
+@model Profile
+
+@section Styles{ 
+	<style>
+		#profile-photo { text-align: center; }
+		#profile-photo img { max-width: 100%; max-height: 240px; margin-bottom: 1em; }
+	</style>
+}
+
+@if (Model == null)
+{
+
+	<div class="container">
+		<div class="alert alert-danger">
+			<span class="glyphicon glyphicon-ban-circle"></span>
+			<strong>Sorry, your profile was not found.</strong>
+		</div>
+	</div>
+}
+
+<section class="content theme">
+	<div class="container">
+		<h2 class="text-center">@Model.DisplayName</h2>
+		<div class="row">
+			<div id="profile-photo" class="col-md-4">
+				@if (!string.IsNullOrWhiteSpace(Model.PhotoUrl))
+				{
+					<img src="@Model.PhotoUrl" alt="Photo" />
+				}
+				else
+				{
+					<div class="alert alert-info" style="font-size:42px;">
+						<span class="glyphicon glyphicon-ban-circle"></span>
+						No Photo
+					</div>
+				}
+			</div>
+			<div class="col-md-8">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label asp-for="Email" class="control-label col-sm-4">Email Address</label>
+						<div class="col-sm-8">
+							<input asp-for="Email" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label asp-for="LinkedInUrl" class="control-label col-sm-4">Linked-In</label>
+						<div class="col-sm-8">
+							<input asp-for="LinkedInUrl" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label asp-for="GitHubUrl" class="control-label col-sm-4">GitHub</label>
+						<div class="col-sm-8">
+							<input asp-for="GitHubUrl" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label asp-for="StackOverflowCvUrl" class="control-label col-sm-4">StackOverflow CV</label>
+						<div class="col-sm-8">
+							<input asp-for="StackOverflowCvUrl" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label asp-for="FacebookUrl" class="control-label col-sm-4">Facebook</label>
+						<div class="col-sm-8">
+							<input asp-for="FacebookUrl" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label asp-for="TwitterHandle" class="control-label col-sm-4">Twitter</label>
+						<div class="col-sm-8">
+							<input asp-for="TwitterHandle" class="form-control" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="content theme">
+	<div class="container">
+			@Html.Raw(Model.Summary)
+	</div>
+</section>
