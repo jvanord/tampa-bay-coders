@@ -27,6 +27,7 @@ namespace TampaBayCoders.Data
 			if (string.IsNullOrWhiteSpace(connectionSettings.Key)) throw new Exception("Database Authorization Key Not Found");
 			ConnectionSettings = connectionSettings;
 			DocumentClient = new DocumentClient(new Uri(connectionSettings.Endpoint), connectionSettings.Key);
+			DocumentClient.OpenAsync(); // to avoid startup latency
 		}
 
 		internal static CosmosDbConnection Singleton(CosmosDbSettings connectionSettings)
