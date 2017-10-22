@@ -47,6 +47,7 @@
 					<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
 					<li><a asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="about">About</a></li>
 					<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+					<li class="hidden"><button class="btn btn-danger navbar-btn">Contribute</button></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					@if (User.Identity.IsAuthenticated)
