@@ -1,9 +1,10 @@
 @model Profile
 
-@section Styles{ 
+@section Styles{
 	<style>
 		#profile-photo { text-align: center; }
-		#profile-photo img { max-width: 100%; max-height: 240px; margin-bottom: 1em; }
+			#profile-photo img { max-width: 100%; max-height: 240px; margin-bottom: 1em; }
+		#profile-social > a { margin: .5em; }
 	</style>
 }
 
@@ -34,9 +35,26 @@
 						No Photo
 					</div>
 				}
+				<div id="profile-social">
+					<a class="@(string.IsNullOrWhiteSpace(Model.WebsiteUrl) ? " hidden" : string.Empty)" href="@Model.WebsiteUrl" title="Website">
+						<i class="fa fa-globe"></i>
+					</a>
+					<a class="@(string.IsNullOrWhiteSpace(Model.GitHubUrl) ? "hidden" : string.Empty)" href="@Model.GitHubUrl" title="GitHub">
+						<i class="fa fa-github"></i>
+					</a>
+					<a class="@(string.IsNullOrWhiteSpace(Model.LinkedInUrl) ? "hidden" : string.Empty)" href="@Model.LinkedInUrl" title="Linked-In">
+						<i class="fa fa-linkedin"></i>
+					</a>
+					<a class="@(string.IsNullOrWhiteSpace(Model.TwitterHandle) ? "TwitterHandle" : string.Empty)" href="@Model.TwitterHandle" title="Twitter">
+						<i class="fa fa-twitter"></i>
+					</a>
+					<a class="@(string.IsNullOrWhiteSpace(Model.FacebookUrl) ? "hidden" : string.Empty)" href="@Model.FacebookUrl" title="Facebook">
+						<i class="fa fa-facebook"></i>
+					</a>
+				</div>
 			</div>
 			<div class="col-md-8">
-				<form class="form-horizontal">
+				@*<form class="form-horizontal">
 					<div class="form-group">
 						<label asp-for="Email" class="control-label col-sm-4">Email Address</label>
 						<div class="col-sm-8">
@@ -73,14 +91,9 @@
 							<input asp-for="TwitterHandle" class="form-control" />
 						</div>
 					</div>
-				</form>
+				</form>*@
+				@Html.Raw(Model.Summary)
 			</div>
 		</div>
-	</div>
-</section>
-
-<section class="content theme">
-	<div class="container">
-			@Html.Raw(Model.Summary)
 	</div>
 </section>
