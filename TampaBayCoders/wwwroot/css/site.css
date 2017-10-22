@@ -36,59 +36,40 @@ section.content {
   font-size: 24px;
   line-height: 1.75em;
 }
-div.theme h1,
-section.theme h1,
-div.theme h2,
-section.theme h2 {
+.theme h1,
+.theme h2 {
   color: #ff5400;
   text-align: center;
   font-size: 36px;
   text-transform: uppercase;
   margin-bottom: 1em;
 }
-div.theme h3,
-section.theme h3,
-div.theme h4,
-section.theme h4,
-div.theme h5,
-section.theme h5,
-div.theme h6,
-section.theme h6,
-div.theme b,
-section.theme b,
-div.theme strong,
-section.theme strong {
+.theme h3,
+.theme h4,
+.theme h5,
+.theme h6,
+.theme b,
+.theme strong {
   color: #ff5400;
 }
-div.theme.inverse,
-section.theme.inverse {
+.theme.inverse {
   background-color: #ff5400;
   color: white;
 }
-div.theme.inverse a,
-section.theme.inverse a {
+.theme.inverse a {
   color: white;
 }
-div.theme.inverse-light,
-section.theme.inverse-light {
+.theme.inverse-light {
   background-color: #ffccb3;
 }
-div.theme.inverse-light h1,
-section.theme.inverse-light h1,
-div.theme.inverse-light h2,
-section.theme.inverse-light h2,
-div.theme.inverse-light h3,
-section.theme.inverse-light h3,
-div.theme.inverse-light h4,
-section.theme.inverse-light h4,
-div.theme.inverse-light h5,
-section.theme.inverse-light h5,
-div.theme.inverse-light h6,
-section.theme.inverse-light h6,
-div.theme.inverse-light b,
-section.theme.inverse-light b,
-div.theme.inverse-light strong,
-section.theme.inverse-light strong {
+.theme.inverse-light h1,
+.theme.inverse-light h2,
+.theme.inverse-light h3,
+.theme.inverse-light h4,
+.theme.inverse-light h5,
+.theme.inverse-light h6,
+.theme.inverse-light b,
+.theme.inverse-light strong {
   color: #ff5400;
 }
 #topnav .navbar-header {
