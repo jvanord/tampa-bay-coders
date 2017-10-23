@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using TampaBayCoders.Configuration;
+using TampaBayCoders.Models;
 using TampaBayCoders.Services;
 
 namespace TampaBayCoders.Controllers
@@ -22,19 +23,30 @@ namespace TampaBayCoders.Controllers
 		{
 			var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 			var myProfile = await ProfileService.Connect(SharedDataConnection).FindByUserId(userId);
-			//if (myProfile == null)
-			//	return RedirectToAction("Create");
+			if (myProfile == null)
+				return RedirectToAction("Create");
 			return View("ViewProfile", myProfile);
 		}
 
 		[Route("{id}")]
-		public IActionResult ViewProfile(string id)
+		public async Task<IActionResult> ViewProfileAsync(string id)
 		{
-			return Content("Profile View For: " + id);
+			var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+			var myProfile = await ProfileService.Connect(SharedDataConnection).ReadAsync(id);
+			if (myProfile == null)
+				return RedirectToAction("Create");
+			return View(myProfile);
 		}
 
-		[Authorize, Route("create")]
-		public IActionResult Create(string id)
+		[Authorize, HttpGet, Route("create")]
+		public IActionResult Create()
+		{
+			var myProfile = ProfileService.Connect(SharedDataConnection).StubForUser(User);
+			return View("EditProfile", myProfile);
+		}
+
+		[Authorize, HttpPost, Route("create")]
+		public IActionResult Create(Profile profile)
 		{
 			return Content("Create a New Profile");
 		}

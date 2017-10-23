@@ -22,14 +22,6 @@ namespace TampaBayCoders.Services
 
 		public static ProfileService Connect(CosmosDbConnection dataConnection) => new ProfileService(dataConnection);
 
-		public async Task<IAsyncEnumerable<Profile>> FindByUserNameAsync(string name)
-		{
-			var collectionUri = await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
-			var options = new FeedOptions { MaxItemCount = 1 };
-			var query = DataConnection.DocumentClient.CreateDocumentQuery<Profile>(collectionUri, options).Where(p => p.UserName == name);
-			return query.ToAsyncEnumerable(); // this will execute the query asynchronously
-		}
-
 		public async Task<Profile> FindByUserId(string userId)
 		{
 			var collectionUri = await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
@@ -45,19 +37,18 @@ namespace TampaBayCoders.Services
 			return profile;
 		}
 
-		[Obsolete("Don't create an automatically generated profile that the user hasn't reviewed first.")]
-		internal async Task<Profile> Create(ClaimsPrincipal user)
+		public Profile StubForUser(ClaimsPrincipal user)
 		{
 			var profile = new Profile
 			{
-				UserId = getClaim(user, true, "sub", "user_id", "nameidentifier"),
-				UserName = user.Identity.Name,
-				DisplayName = getClaim(user, true, "name", "nickname", "givenname"),
-				Email = getClaim(user, true, "email", "emailaddress"),
-				PhotoUrl = getClaim(user, false, "picture"),
-				Claims = user.Claims.Select(c => new KeyValuePair<string, string>(c.Type, c.Value))
+				UserId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value, // getClaim(user, true, "sub", "user_id", "nameidentifier"),
+				//UserName = user.Identity.Name,
+				DisplayName = (user.FindFirst(ClaimTypes.Name) ?? user.FindFirst(ClaimTypes.GivenName))?.Value, // getClaim(user, true, "name", "nickname", "givenname"),
+				Email = user.FindFirst(ClaimTypes.Email)?.Value, // getClaim(user, true, "email", "emailaddress"),
+				PhotoUrl = user.FindFirst("picture")?.Value // getClaim(user, false, "picture"),
+				//Claims = user.Claims.Select(c => new KeyValuePair<string, string>(c.Type, c.Value))
 			};
-			return await Create(profile);
+			return profile;
 		}
 
 		private string getClaim(ClaimsPrincipal user, bool errorIfNotFound, params string[] types)
@@ -77,8 +68,10 @@ namespace TampaBayCoders.Services
 
 		public async Task<Profile> ReadAsync(string id)
 		{
-			await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
-			throw new NotImplementedException();
+			var collectionUri = await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
+			var documentUri = DataConnection.CreateDocumentUri(CollectionName.Profiles, id);
+			var response = await DataConnection.DocumentClient.ReadDocumentAsync<Profile>(documentUri);
+			return response;
 		}
 
 		public async Task<Profile> UpdateAsync(Profile profile)

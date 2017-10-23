@@ -52,5 +52,10 @@ namespace TampaBayCoders.Data
 		}
 
 		internal Uri CollectionUri(CollectionName collection) => _collectionUris[collection];
+
+		internal Uri CreateDocumentUri(CollectionName collection, string documentId)
+		{
+			return UriFactory.CreateDocumentUri(ConnectionSettings.DatabaseId, collection.ToString(), documentId);
+		}
 	}
 }
