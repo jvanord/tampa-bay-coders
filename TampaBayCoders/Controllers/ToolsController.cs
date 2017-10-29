@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Options;
 using TampaBayCoders.Configuration;
@@ -27,30 +28,9 @@ namespace TampaBayCoders.Controllers
 		[Route("site-diagnostics")]
 		public async Task<IActionResult> Diagnostics()
 		{
-			var results = await runDiagnosticsAsync();
+			var results = await SiteDiagnostics.RunAsync(_dbSettings);
 			return View(results);
 		}
 
-		private async Task<SiteDiagnosticsViewModel> runDiagnosticsAsync()
-		{
-			var results = new SiteDiagnosticsViewModel();
-			DocumentClient client;
-			results.DatabaseEndpoint = _dbSettings.Endpoint;
-			results.DatabaseId = _dbSettings.DatabaseId;
-			try
-			{
-				client = new DocumentClient(new Uri(_dbSettings.Endpoint), _dbSettings.Key);
-				await client.OpenAsync();
-				results.ConnectionTest = new SiteDiagnosticsViewModel.TestResult();
-			}
-			catch (Exception ex) {
-				results.ConnectionTest = new SiteDiagnosticsViewModel.TestResult
-				{
-					Status = SiteDiagnosticsViewModel.ResultStatus.Fail,
-					Message = ex.Message
-				};
-			}
-			return results;
-		}
 	}
 }

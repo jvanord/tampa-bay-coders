@@ -1,11 +1,25 @@
-@model SiteDiagnosticsViewModel
+@model SiteDiagnostics
 
 <div class="container theme">
 
 	<h2>Site Diagnostics Results</h2>
 	
-	<p>Database Endpoint: @Model.DatabaseEndpoint</p>
-	<p>Database ID: @Model.DatabaseId</p>
-	<p>Connect Test: @Model.ConnectionTest.Status | @Model.ConnectionTest.Message</p>
+	<table class="table" style="table-layout: fixed;word-wrap: break-word;">
+		<thead>
+			<tr>
+				<th>Test</th>
+				<th>Result</th>
+			</tr>
+		</thead>
+		<tbody>
+		@foreach (var test in Model.Tests)
+		{
+			<tr>
+				<td>@test.Name</td>
+				<td>@Html.Partial("TestResult", test)</td>
+			</tr>
+		}
+		</tbody>
+	</table>
 
 </div>

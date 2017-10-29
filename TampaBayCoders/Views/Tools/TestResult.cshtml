@@ -1,0 +1,10 @@
+@model SiteDiagnostics.TestResult
+
+@if (Model == null)
+{
+	<div class="alert alert-warning">Test Not Run</div>
+}
+else
+{
+	<div class="alert @(Model.Status == SiteDiagnostics.ResultStatus.Success ? "alert-success" : "alert-danger")">@Model.Status.ToString() - @Model.Message</div>
+}
