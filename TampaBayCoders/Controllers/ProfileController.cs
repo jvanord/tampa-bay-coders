@@ -19,17 +19,18 @@ namespace TampaBayCoders.Controllers
 
 		// GET: /Profile
 		[Authorize, Route("")]
-		public async Task<IActionResult> IndexAsync()
+		public async Task<IActionResult> Index()
 		{
 			var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 			var myProfile = await ProfileService.Connect(SharedDataConnection).FindByUserId(userId);
 			if (myProfile == null)
 				return RedirectToAction("Create");
+			return RedirectToAction("ViewProfile", new { id = myProfile.Id });
 			return View("ViewProfile", myProfile);
 		}
 
 		[Route("{id}")]
-		public async Task<IActionResult> ViewProfileAsync(string id)
+		public async Task<IActionResult> ViewProfile(string id)
 		{
 			var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 			var myProfile = await ProfileService.Connect(SharedDataConnection).ReadAsync(id);
@@ -46,9 +47,12 @@ namespace TampaBayCoders.Controllers
 		}
 
 		[Authorize, HttpPost, Route("create")]
-		public IActionResult Create(Profile profile)
+		public async Task<IActionResult> Create(Profile profile)
 		{
-			return Content("Create a New Profile");
+			if (!ModelState.IsValid)
+				return View("EditProfile", profile);
+			var createdProfile = await ProfileService.Connect(SharedDataConnection).Create(profile);
+			return RedirectToAction("ViewProfile", new { id = createdProfile.Id });
 		}
 	}
 }

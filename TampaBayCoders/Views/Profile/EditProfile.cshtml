@@ -1,55 +1,118 @@
 @model Profile
 
+@section Styles{ 
+	<style>
+		#validation-summary.validation-summary-valid { display: none; }
+	</style>
+}
+
 <div class="container theme">
 	<h2>@(string.IsNullOrWhiteSpace(Model.Id) ? "Create" : "Edit") Your Profile</h2>
-	<form class="form-horizontal">
+</div>
+<div class="container">
+	<div id="validation-summary" class="alert alert-danger" asp-validation-summary="All"></div>
+	<div class="alert alert-info text-center">
+		<h4>
+			<span class="glyphicon glyphicon-alert"></span>
+			Heads Up
+		</h4>
+		<p>Your information on this page will be publicly visible on this site.</p>
+		<p>Falsifying information on your profile is grounds for deleting the profile and/or banning the user from the site.</p>
+	</div>
+	<form class="form-horizontal" asp-action="Create" method="post">
+		<input type="hidden" asp-for="UserId" />
 		<div class="form-group">
-			<label asp-for="PhotoUrl" class="control-label col-sm-3">Photo Url</label>
+			<label asp-for="Type" class="col-sm-3 control-label">
+				I Am
+				<sup class="glyphicon glyphicon-info-sign text-info" data-toggle="tooltip" title="Note: Do not claim to be a coder if you don't code."></sup>
+			</label>
+			<div class="col-sm-9">
+				<select asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList(typeof(ProfileType))"></select>
+				<span asp-validation-for="Type" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label asp-for="DisplayName" class="col-sm-3 control-label">
+				Show My Name as
+				<sup class="glyphicon glyphicon-info-sign text-info" data-toggle="tooltip" title="This is how your name will be displayed on this site."></sup>
+			</label>
+			<div class="col-sm-9">
+				<input asp-for="DisplayName" class="form-control" />
+				<span asp-validation-for="DisplayName" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label asp-for="PhotoUrl" class="control-label col-sm-3">
+				My Photo or Logo is at
+				<sup class="glyphicon glyphicon-info-sign text-info" data-toggle="tooltip" title="Enter a URL to your public photo or logo. This image will be displayed on your profile and search results."></sup>
+			</label>
+			@*<img src="@Model.PhotoUrl" onerror="this.style.display='none';" style="max-width:100%;" class="col-sm-1" />*@
 			<div class="col-sm-9">
 				<input asp-for="PhotoUrl" class="form-control" />
+				<span asp-validation-for="PhotoUrl" class="text-danger"></span>
 			</div>
 		</div>
 		<div class="form-group">
-			<label asp-for="Email" class="control-label col-sm-3">Email Address</label>
+			<label asp-for="Email" class="control-label col-sm-3">You Can Email Me at</label>
 			<div class="col-sm-9">
 				<input asp-for="Email" class="form-control" />
+				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 		</div>
 		<div class="form-group">
-			<label asp-for="GitHubUrl" class="control-label col-sm-3">GitHub</label>
+			<label asp-for="GitHubUrl" class="control-label col-sm-3">My GitHub Profile is at</label>
 			<div class="col-sm-9">
 				<input asp-for="GitHubUrl" class="form-control" />
+				<span asp-validation-for="GitHubUrl" class="text-danger"></span>
 			</div>
 		</div>
 		<div class="form-group">
-			<label asp-for="StackOverflowCvUrl" class="control-label col-sm-3">Stack Overflow CV</label>
+			<label asp-for="StackOverflowUrl" class="control-label col-sm-3">My Stack Overflow Profile is at</label>
 			<div class="col-sm-9">
-				<input asp-for="StackOverflowCvUrl" class="form-control" />
+				<input asp-for="StackOverflowUrl" class="form-control" />
+				<span asp-validation-for="StackOverflowUrl" class="text-danger"></span>
 			</div>
 		</div>
 		<div class="form-group">
-			<label asp-for="LinkedInUrl" class="control-label col-sm-3">Linked-In</label>
+			<label asp-for="LinkedInUrl" class="control-label col-sm-3">Fine me on Linked-In at</label>
 			<div class="col-sm-9">
 				<input asp-for="LinkedInUrl" class="form-control" />
+				<span asp-validation-for="LinkedInUrl" class="text-danger"></span>
 			</div>
 		</div>
 		<div class="form-group">
-			<label asp-for="FacebookUrl" class="control-label col-sm-3">Facebook</label>
+			<label asp-for="FacebookUrl" class="control-label col-sm-3">Find me on Facebook at</label>
 			<div class="col-sm-9">
 				<input asp-for="FacebookUrl" class="form-control" />
+				<span asp-validation-for="FacebookUrl" class="text-danger"></span>
 			</div>
 		</div>
 		<div class="form-group">
-			<label asp-for="TwitterHandle" class="control-label col-sm-3">Twitter</label>
+			<label asp-for="TwitterHandle" class="control-label col-sm-3">My Twitter Handle is</label>
 			<div class="col-sm-9">
 				<input asp-for="TwitterHandle" class="form-control" />
+				<span asp-validation-for="TwitterHandle" class="text-danger"></span>
 			</div>
 		</div>
 		<div class="form-group">
-			<label asp-for="Summary" class="control-label col-sm-3">About You</label>
+			<label asp-for="Summary" class="control-label col-sm-3">About Me</label>
 			<div class="col-sm-9">
-				<textarea asp-for="Summary" class="form-control"></textarea>
+				<textarea asp-for="Summary" class="form-control" row="8"></textarea>
+				<span asp-validation-for="Summary" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="form-group theme">
+			<div class="col-sm-9 col-sm-offset-3">
+				<button class="btn btn-lg btn-primary" type="submit">Create Profile</button>
 			</div>
 		</div>
 	</form>
 </div>
+
+@section Scripts{
+	<script>
+		$(document).ready(function(){
+			$('[data-toggle="tooltip"]').tooltip(); 
+		});
+	</script>
+}

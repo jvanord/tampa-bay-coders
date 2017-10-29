@@ -34,36 +34,28 @@ namespace TampaBayCoders.Services
 		{
 			var collectionUri = await DataConnection.InitializeCollection(CollectionName.Profiles); // don't call a database that isn't ready
 			var response = await DataConnection.DocumentClient.CreateDocumentAsync(collectionUri, profile);
+			profile.Id = response.Resource.Id;
 			return profile;
 		}
 
 		public Profile StubForUser(ClaimsPrincipal user)
 		{
+			var nameId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			var nickname = user.FindFirst("nickname")?.Value;
 			var profile = new Profile
 			{
-				UserId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value, // getClaim(user, true, "sub", "user_id", "nameidentifier"),
-				//UserName = user.Identity.Name,
-				DisplayName = (user.FindFirst(ClaimTypes.Name) ?? user.FindFirst(ClaimTypes.GivenName))?.Value, // getClaim(user, true, "name", "nickname", "givenname"),
-				Email = user.FindFirst(ClaimTypes.Email)?.Value, // getClaim(user, true, "email", "emailaddress"),
-				PhotoUrl = user.FindFirst("picture")?.Value // getClaim(user, false, "picture"),
-				//Claims = user.Claims.Select(c => new KeyValuePair<string, string>(c.Type, c.Value))
+				UserId = nameId,
+				DisplayName = (user.FindFirst(ClaimTypes.Name) ?? user.FindFirst(ClaimTypes.GivenName))?.Value,
+				Email = user.FindFirst(ClaimTypes.Email)?.Value,
+				PhotoUrl = user.FindFirst("picture")?.Value
 			};
-			return profile;
-		}
-
-		private string getClaim(ClaimsPrincipal user, bool errorIfNotFound, params string[] types)
-		{
-			if (user == null) throw new NullReferenceException("No user specified.");
-			if (!types.Any()) throw new Exception("No claims type specified.");
-			Claim match;
-			foreach (var type in types)
+			var authenticationSource = nameId?.ToLower().Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+			switch (authenticationSource)
 			{
-				match = user.Claims.FirstOrDefault(c => c.Type == type || c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/" + type);
-				if (match != null) return match.Value;
+				case "github": if (!string.IsNullOrWhiteSpace(nickname)) profile.GitHubUrl = $"https://github.com/{nickname}"; break;
+				default: break;
 			}
-			if (errorIfNotFound)
-				throw new Exception($"Could not find claim(s) for user: {string.Join(" | ", types)}");
-			return null;
+			return profile;
 		}
 
 		public async Task<Profile> ReadAsync(string id)
