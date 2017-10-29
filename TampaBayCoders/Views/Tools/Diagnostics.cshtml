@@ -1,1 +1,11 @@
-<div class="container"><h2>Placeholder for Site Diagnostics Page</h2></div>
+@model SiteDiagnosticsViewModel
+
+<div class="container theme">
+
+	<h2>Site Diagnostics Results</h2>
+	
+	<p>Database Endpoint: @Model.DatabaseEndpoint</p>
+	<p>Database ID: @Model.DatabaseId</p>
+	<p>Connect Test: @Model.ConnectionTest.Status | @Model.ConnectionTest.Message</p>
+
+</div>
