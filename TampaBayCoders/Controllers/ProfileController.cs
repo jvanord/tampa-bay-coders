@@ -46,7 +46,7 @@ namespace TampaBayCoders.Controllers
 			return View("EditProfile", myProfile);
 		}
 
-		[Authorize, HttpPost, Route("create")]
+		[Authorize, HttpPost, Route("create"), ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(Profile profile)
 		{
 			if (!ModelState.IsValid)

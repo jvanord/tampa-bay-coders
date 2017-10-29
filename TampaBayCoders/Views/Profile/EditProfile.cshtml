@@ -20,6 +20,7 @@
 		<p>Falsifying information on your profile is grounds for deleting the profile and/or banning the user from the site.</p>
 	</div>
 	<form class="form-horizontal" asp-action="Create" method="post">
+		@Html.AntiForgeryToken()
 		<input type="hidden" asp-for="UserId" />
 		<div class="form-group">
 			<label asp-for="Type" class="col-sm-3 control-label">
