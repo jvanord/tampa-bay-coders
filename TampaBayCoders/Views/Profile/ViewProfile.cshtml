@@ -36,22 +36,40 @@
 					</div>
 				}
 				<div id="profile-social">
-					<a class="@(string.IsNullOrWhiteSpace(Model.WebsiteUrl) ? " hidden" : string.Empty)" href="@Model.WebsiteUrl" title="Website">
+					<a class="@(string.IsNullOrWhiteSpace(Model.WebsiteUrl) ? " hidden" : string.Empty)" 
+					   href="@Model.WebsiteUrl" 
+					   title="Website" 
+					   target="_blank">
 						<i class="fa fa-globe"></i>
 					</a>
-					<a class="@(string.IsNullOrWhiteSpace(Model.GitHubUrl) ? "hidden" : string.Empty)" href="@Model.GitHubUrl" title="GitHub">
+					<a class="@(string.IsNullOrWhiteSpace(Model.GitHubUrl) ? "hidden" : string.Empty)" 
+					   href="@Model.GitHubUrl" 
+					   title="GitHub" 
+					   target="_blank">
 						<i class="fa fa-github"></i>
 					</a>
-					<a class="@(string.IsNullOrWhiteSpace(Model.StackOverflowUrl) ? "hidden" : string.Empty)" href="@Model.StackOverflowUrl" title="GitHub">
+					<a class="@(string.IsNullOrWhiteSpace(Model.StackOverflowUrl) ? "hidden" : string.Empty)" 
+					   href="@Model.StackOverflowUrl" 
+					   title="Stack Overflow" 
+					   target="_blank">
 						<i class="fa fa-stack-overflow"></i>
 					</a>
-					<a class="@(string.IsNullOrWhiteSpace(Model.LinkedInUrl) ? "hidden" : string.Empty)" href="@Model.LinkedInUrl" title="Linked-In">
+					<a class="@(string.IsNullOrWhiteSpace(Model.LinkedInUrl) ? "hidden" : string.Empty)" 
+					   href="@Model.LinkedInUrl" 
+					   title="Linked-In" 
+					   target="_blank">
 						<i class="fa fa-linkedin"></i>
 					</a>
-					<a class="@(string.IsNullOrWhiteSpace(Model.TwitterHandle) ? "hidden" : string.Empty)" href="@Model.TwitterHandle" title="Twitter">
+					<a class="@(string.IsNullOrWhiteSpace(Model.TwitterHandle) ? "hidden" : string.Empty)" 
+					   href="@(Model.TwitterHandle.StartsWith("@") ? $"https://twitter.com/{Model.TwitterHandle}" : Model.TwitterHandle)" 
+					   title="Twitter" 
+					   target="_blank">
 						<i class="fa fa-twitter"></i>
 					</a>
-					<a class="@(string.IsNullOrWhiteSpace(Model.FacebookUrl) ? "hidden" : string.Empty)" href="@Model.FacebookUrl" title="Facebook">
+					<a class="@(string.IsNullOrWhiteSpace(Model.FacebookUrl) ? "hidden" : string.Empty)" 
+					   href="@Model.FacebookUrl" 
+					   title="Facebook" 
+					   target="_blank">
 						<i class="fa fa-facebook"></i>
 					</a>
 				</div>
