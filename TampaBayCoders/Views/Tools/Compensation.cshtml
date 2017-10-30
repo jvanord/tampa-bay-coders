@@ -1,7 +1,12 @@
+@model CompensationCalculatorViewModel
+
 <div class="container">
 
 	<div class="content theme">
-		<h2>Compensation Calculator</h2>
+		<h2>
+			Compensation Calculator<br />
+			<span class="label label-danger">Beta In-Progress</span>
+		</h2>
 		<p class="text-center">
 			Ever wondered just how much your compensations is worth?
 			<br />
@@ -44,12 +49,13 @@
 			</div>
 			<div id="salary-panel" class="panel-collapse collapse in">
 				<div class="panel-body">
-					<form class="form-inline">
-						<input type="hidden" name="calculator" value="salary" />
+					<form class="form-inline" asp-action="Compensation" method="post">
+						<input type="hidden" asp-for="Calculation" value="Salary" />
 						<div class="form-group">
-							<label for="salary" class="sr-only">Annual Salary</label>
-							<input name="salary" class="form-control" type="number" min="0" inputmode="numeric" step="1" placeholder="Annual Salary" />
+							<label asp-for="Salary" class="sr-only"></label>
+							<input asp-for="Salary" class="form-control" type="number" min="0" inputmode="numeric" step="1" placeholder="Annual Salary" />
 							<button type="submit" class="btn btn-primary">Calculate</button>
+							<span asp-validation-for="Salary"></span>
 						</div>
 					</form>
 				</div>
@@ -64,12 +70,13 @@
 			</div>
 			<div id="wage-panel" class="panel-collapse collapse">
 				<div class="panel-body">
-					<form class="form-inline">
-						<input type="hidden" name="calculator" value="wage" />
+					<form class="form-inline" asp-action="Compensation" method="post">
+						<input type="hidden" asp-for="Calculation" value="Wage" />
 						<div class="form-group">
-							<label for="wage" class="sr-only">Annual Salary</label>
-							<input name="wage" class="form-control" type="number" min="0" inputmode="numeric" step="1" placeholder="Hourly Wage" />
+							<label asp-for="Wage" class="sr-only"></label>
+							<input asp-for="Wage" class="form-control" type="number" min="0" inputmode="numeric" step="1" placeholder="Hourly Wage" />
 							<button type="submit" class="btn btn-primary">Calculate</button>
+							<span asp-validation-for="Wage"></span>
 						</div>
 					</form>
 				</div>
@@ -84,12 +91,13 @@
 			</div>
 			<div id="rate-panel" class="panel-collapse collapse">
 				<div class="panel-body">
-					<form class="form-inline">
-						<input type="hidden" name="calculator" value="rate" />
+					<form class="form-inline" asp-action="Compensation" method="post">
+						<input type="hidden" asp-for="Calculation" value="Rate" />
 						<div class="form-group">
-							<label for="rate" class="sr-only">Annual Salary</label>
-							<input name="rate" class="form-control" type="number" min="0" inputmode="numeric" step="1" placeholder="Contract Rate" />
+							<label asp-for="Rate" class="sr-only"></label>
+							<input asp-for="Rate" class="form-control" type="number" min="0" inputmode="numeric" step="1" placeholder="Contract Rate" />
 							<button type="submit" class="btn btn-primary">Calculate</button>
+							<span asp-validation-for="Rate"></span>
 						</div>
 					</form>
 				</div>
@@ -98,12 +106,118 @@
 
 	</div>
 
+	@if(Model.Result != null)
+	{
+		<table class="table" style="table-layout: fixed;word-wrap: break-word;">
+			<caption>Calculation Results</caption>
+			<tr>
+				<td>Compensation Scenario</td>
+				<td>Typical Full Time <label asp-for="Calculation"></label> Job</td>
+			</tr>
+			<tr>
+				<td>Result Check</td>
+				<td>
+					@if (Model.ResultCheck)
+					{
+						<span class="glyphicon glyphicon-ok-sign text-success"></span>
+						<span class="sr-only">Success</span>
+					}
+					else
+					{
+						<span class="glyphicon glyphicon-remove-sign text-danger"></span>
+						<span class="sr-only">Failed</span>
+					}
+				</td>
+			</tr>
+			<tr>
+				<td><label asp-for="Calculation"></label></td>
+				<td>
+					<label asp-for="Salary" class="@(Model.Calculation == CompensationCalculatorViewModel.CalculationType.Salary ? "" : "hidden")"></label>
+					<label asp-for="Wage" class="@(Model.Calculation == CompensationCalculatorViewModel.CalculationType.Wage ? "" : "hidden")"></label>
+					<label asp-for="Rate" class="@(Model.Calculation == CompensationCalculatorViewModel.CalculationType.Rate ? "" : "hidden")"></label>
+				</td>
+			</tr>
+			<tr>
+				<td>Hours Worked</td>
+				<td>@Model.Result.ActualHoursWorked.ToString("n0")</td>
+			</tr>
+			<tr>
+				<td>Hours Off</td>
+				<td>@Model.HoursOffPerYear.ToString("n0")</td>
+			</tr>
+			<tr>
+				<td>Federal Tax Rate</td>
+				<td>@Model.TaxProfile.TaxBracketRate.ToString("p2")</td>
+			</tr>
+			<tr>
+				<td>Social Security Tax Rate</td>
+				<td>@Model.TaxProfile.SocialSecurityRate.ToString("p2")</td>
+			</tr>
+			<tr>
+				<td>Medicare Tax Rate</td>
+				<td>@Model.TaxProfile.MedicareRate.ToString("p2")</td>
+			</tr>
+			<tr>
+				<td>Taxes Paid By Employer</td>
+				<td>@Model.Result.TaxesPaidByEmployer.ToString("c")</td>
+			</tr>
+			<tr>
+				<td>Taxes Paid By Employee</td>
+				<td>@Model.Result.TaxesPaidByEmployee.ToString("c")</td>
+			</tr>
+			<tr>
+				<td>Total Taxes Paid</td>
+				<td>@Model.Result.TotalTaxPaid.ToString("c")</td>
+			</tr>
+			<tr>
+				<td>Cash Compensation</td>
+				<td>@Model.Result.NetCompensation.ToString("c")</td>
+			</tr>
+			<tr>
+				<td>Employer Retirement Contribution</td>
+				<td>@Model.Result.RetirementContributionByEmployer.ToString("c")</td>
+			</tr>
+			<tr>
+				<td>Total Retirement Contribution</td>
+				<td>@Model.Result.TotalRetirementContribution.ToString("c")</td>
+			</tr>
+			<tr>
+				<td>Health and Dental</td>
+				<td>@Model.Result.HealthAndDentalPaidByEmployer.ToString("c")</td>
+			</tr>
+			<tr>
+				<td>Total Benefits</td>
+				<td>@Model.Result.TotalBenefitsPaidByEmployer.ToString("c")</td>
+			</tr>
+			<tr>
+				<td>Total Compensation</td>
+				<td>@Model.Result.TotalCompensation.ToString("c")</td>
+			</tr>
+			<tr>
+				<td>Compensation per Hour</td>
+				<td>@Model.Result.CompensationPerHour.ToString("c")</td>
+			</tr>
+			<tr class="@(Model.Calculation == CompensationCalculatorViewModel.CalculationType.Salary ? "" : "hidden")">
+				<td>Equivalent Salary</td>
+				<td>@Model.Result.EquivalentSalary.GetValueOrDefault().ToString("c")</td>
+			</tr>
+			<tr class="@(Model.Calculation == CompensationCalculatorViewModel.CalculationType.Wage ? "" : "hidden")">
+				<td>Equivalent Hourly Wage</td>
+				<td>@Model.Result.EquivalentWageRate.GetValueOrDefault().ToString("c")</td>
+			</tr>
+			<tr class="@(Model.Calculation == CompensationCalculatorViewModel.CalculationType.Rate ? "" : "hidden")">
+				<td>Equivalent Contract Rate</td>
+				<td>@Model.Result.EquivalentContractRate.GetValueOrDefault().ToString("c")</td>
+			</tr>
+		</table>
+	}
+
 </div>
 
 @section Scripts{
 	<script>
 		$(function () {
 			$('button').click(function (e) { $(this).append($('<i/>').addClass('fa fa-spinner fa-spin')); });
-		});
+				});
 	</script>
 }

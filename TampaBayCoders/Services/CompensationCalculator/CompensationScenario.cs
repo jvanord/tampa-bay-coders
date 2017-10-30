@@ -28,7 +28,7 @@ namespace TampaBayCoders.Services.CompensationCalculator
 		public static CompensationScenario Current()
 			=> new CompensationScenario(25, TaxProfile.Current(), BenefitsProfile.None());
 
-		public SalaryCalculationResult CalculateSalary(decimal salary, decimal bonus = 0)
+		public CalculationResult CalculateSalary(decimal salary, decimal bonus = 0)
 		{
 			if (salary < 1)
 				throw new Exception("Salary too low to calculate.");
@@ -46,7 +46,7 @@ namespace TampaBayCoders.Services.CompensationCalculator
 			var employerRetirement = Math.Min(BenefitsProfile.RetirementContributionRate, BenefitsProfile.RetirementMatchingContributionRate) * salary;
 			var employeeRetirement = BenefitsProfile.RetirementContributionRate * salary;
 
-			var result = new SalaryCalculationResult
+			var result = new CalculationResult
 			{
 				ActualHoursWorked = hoursWorked,
 				CashCompensation = taxableAmount,
@@ -81,7 +81,7 @@ namespace TampaBayCoders.Services.CompensationCalculator
 			return num / den; // Paid for Time Off so No Adjustment for Hours
 		}
 
-		public WageCalculationResult CalculateHourlyWage(decimal wagesPerHour)
+		public CalculationResult CalculateHourlyWage(decimal wagesPerHour)
 		{
 			if (wagesPerHour < 1)
 				throw new Exception("Wages too low to calculate.");
@@ -100,7 +100,7 @@ namespace TampaBayCoders.Services.CompensationCalculator
 			var employerRetirement = Math.Min(BenefitsProfile.RetirementContributionRate, BenefitsProfile.RetirementMatchingContributionRate) * wagesPerYear;
 			var employeeRetirement = BenefitsProfile.RetirementContributionRate * wagesPerYear;
 
-			var result = new WageCalculationResult
+			var result = new CalculationResult
 			{
 				ActualHoursWorked = 40 * _weeksPerYear - 8 * DaysOffPerYear,
 				CashCompensation = taxableAmount,
@@ -135,7 +135,7 @@ namespace TampaBayCoders.Services.CompensationCalculator
 			return wagesPerYear / (40 * _weeksPerYear); // Paid for Time Off
 		}
 
-		public ContractCalculationResult CalculateContractRate(decimal ratePerHour)
+		public CalculationResult CalculateContractRate(decimal ratePerHour)
 		{
 			if (ratePerHour < 1)
 				throw new Exception("Rate too low to calculate.");
@@ -154,7 +154,7 @@ namespace TampaBayCoders.Services.CompensationCalculator
 			var employerRetirement = 0;
 			var employeeRetirement = BenefitsProfile.RetirementContributionRate * totalMoneyPaid;
 
-			var result = new ContractCalculationResult
+			var result = new CalculationResult
 			{
 				ActualHoursWorked = 40 * _weeksPerYear - 8 * DaysOffPerYear,
 				CashCompensation = taxableAmount,
