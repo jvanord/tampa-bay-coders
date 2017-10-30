@@ -1,1 +1,109 @@
-<div class="container"><h2>Placeholder for Compensation Calculator Page</h2></div>
+<div class="container">
+
+	<div class="content theme">
+		<h2>Compensation Calculator</h2>
+		<p class="text-center">
+			Ever wondered just how much your compensations is worth?
+			<br />
+			Need to do some math to compare disimilar employment offers?
+		</p>
+	</div>
+
+	<div class="alert alert-warning">
+		<h3>
+			<span class="glyphicon glyphicon-warning-sign"></span>
+			Attention
+		</h3>
+		<p>
+			The calculations made by this tool are for information purposes only.
+			While we hope this information will be helpful, we in no way guarantee its accuracy or applicability to any individual circumstance.
+			By using this tool you agree not to hold Tampa Bay Coders, Indasys LLC,
+			or any of our contributors liable for the results or any decisions made using this information.
+		</p>
+	</div>
+
+	<div class="alert alert-info">
+		<h3>
+			<span class="glyphicon glyphicon-info-sign"></span>
+			About the Calculator
+		</h3>
+		<p>
+			This is an early version of the Compenstaion Calculator.
+			This version makes a lot of assumptions that future versions will allow you to customize,
+			such as benefits packages, tax profiles, etc.
+		</p>
+	</div>
+
+	<div id="accordion" class="panel-group">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a href="#salary-panel" data-toggle="collapse" data-parent="#accordion">Salary Calculator</a>
+				</h4>
+			</div>
+			<div id="salary-panel" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<form class="form-inline">
+						<input type="hidden" name="calculator" value="salary" />
+						<div class="form-group">
+							<label for="salary" class="sr-only">Annual Salary</label>
+							<input name="salary" class="form-control" type="number" min="0" inputmode="numeric" step="1" placeholder="Annual Salary" />
+							<button type="submit" class="btn btn-primary">Calculate</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a href="#wage-panel" data-toggle="collapse" data-parent="#accordion">Hourly Wage Calculator</a>
+				</h4>
+			</div>
+			<div id="wage-panel" class="panel-collapse collapse">
+				<div class="panel-body">
+					<form class="form-inline">
+						<input type="hidden" name="calculator" value="wage" />
+						<div class="form-group">
+							<label for="wage" class="sr-only">Annual Salary</label>
+							<input name="wage" class="form-control" type="number" min="0" inputmode="numeric" step="1" placeholder="Hourly Wage" />
+							<button type="submit" class="btn btn-primary">Calculate</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a href="#rate-panel" data-toggle="collapse" data-parent="#accordion">Contract Rate Calculator</a>
+				</h4>
+			</div>
+			<div id="rate-panel" class="panel-collapse collapse">
+				<div class="panel-body">
+					<form class="form-inline">
+						<input type="hidden" name="calculator" value="rate" />
+						<div class="form-group">
+							<label for="rate" class="sr-only">Annual Salary</label>
+							<input name="rate" class="form-control" type="number" min="0" inputmode="numeric" step="1" placeholder="Contract Rate" />
+							<button type="submit" class="btn btn-primary">Calculate</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+@section Scripts{
+	<script>
+		$(function () {
+			$('button').click(function (e) { $(this).append($('<i/>').addClass('fa fa-spinner fa-spin')); });
+		});
+	</script>
+}
