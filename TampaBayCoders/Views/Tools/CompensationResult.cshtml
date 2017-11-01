@@ -1,0 +1,114 @@
+@model CompensationCalculatorViewModel
+
+<table class="table" style="table-layout: fixed;word-wrap: break-word;">
+	<caption>Calculation Results</caption>
+	<tr>
+		<td>Compensation Scenario</td>
+		<td>Typical Full Time @Html.DisplayFor(m => m.Calculation) Job</td>
+	</tr>
+	<tr>
+		<td>Result Check</td>
+		<td>
+			@if (Model.ResultCheck)
+			{
+				<span class="glyphicon glyphicon-ok-sign text-success"></span>
+				<span class="text-success">Success</span>
+			}
+			else
+			{
+				<span class="glyphicon glyphicon-remove-sign text-danger"></span>
+				<span class="text-danger" title="Comp = @Model.ResultComparison">Failed</span>
+
+			}
+		</td>
+	</tr>
+	<tr>
+		<td>@Html.DisplayFor(m => m.Calculation)</td>
+		<td>
+			@if (Model.Calculation == CompensationCalculatorViewModel.CalculationType.Salary)
+			{
+				@string.Format("{0:c}", Model.Salary)
+			}
+			else if (Model.Calculation == CompensationCalculatorViewModel.CalculationType.Wage)
+			{
+				@string.Format("{0:c}", Model.Wage)
+			}
+			else
+			{ 
+				@string.Format("{0:c}", Model.Rate)
+			}
+		</td>
+	</tr>
+	<tr>
+		<td>Hours Worked</td>
+		<td>@Model.Result.ActualHoursWorked.ToString("n0")</td>
+	</tr>
+	<tr>
+		<td>Hours Off</td>
+		<td>@Model.HoursOffPerYear.ToString("n0")</td>
+	</tr>
+	<tr>
+		<td>Federal Tax Rate</td>
+		<td>@Model.TaxProfile.TaxBracketRate.ToString("p2")</td>
+	</tr>
+	<tr>
+		<td>Social Security Tax Rate</td>
+		<td>@Model.TaxProfile.SocialSecurityRate.ToString("p2")</td>
+	</tr>
+	<tr>
+		<td>Medicare Tax Rate</td>
+		<td>@Model.TaxProfile.MedicareRate.ToString("p2")</td>
+	</tr>
+	<tr>
+		<td>Taxes Paid By Employer</td>
+		<td>@Model.Result.TaxesPaidByEmployer.ToString("c")</td>
+	</tr>
+	<tr>
+		<td>Taxes Paid By Employee</td>
+		<td>@Model.Result.TaxesPaidByEmployee.ToString("c")</td>
+	</tr>
+	<tr>
+		<td>Total Taxes Paid</td>
+		<td>@Model.Result.TotalTaxPaid.ToString("c")</td>
+	</tr>
+	<tr>
+		<td>Cash Compensation</td>
+		<td>@Model.Result.NetCompensation.ToString("c")</td>
+	</tr>
+	<tr>
+		<td>Employer Retirement Contribution</td>
+		<td>@Model.Result.RetirementContributionByEmployer.ToString("c")</td>
+	</tr>
+	<tr>
+		<td>Total Retirement Contribution</td>
+		<td>@Model.Result.TotalRetirementContribution.ToString("c")</td>
+	</tr>
+	<tr>
+		<td>Health and Dental</td>
+		<td>@Model.Result.HealthAndDentalPaidByEmployer.ToString("c")</td>
+	</tr>
+	<tr>
+		<td>Total Benefits</td>
+		<td>@Model.Result.TotalBenefitsPaidByEmployer.ToString("c")</td>
+	</tr>
+	<tr>
+		<td>Total Compensation</td>
+		<td>@Model.Result.TotalCompensation.ToString("c")</td>
+	</tr>
+	<tr>
+		<td>Compensation per Hour</td>
+		<td>@Model.Result.CompensationPerHour.ToString("c")</td>
+	</tr>
+	<tr class="@(Model.Calculation == CompensationCalculatorViewModel.CalculationType.Salary ? "hidden" : string.Empty)">
+		<td>Equivalent Salary</td>
+		<td>@Model.Result.EquivalentSalary.GetValueOrDefault().ToString("c")</td>
+	</tr>
+	<tr class="@(Model.Calculation == CompensationCalculatorViewModel.CalculationType.Wage ? "hidden" : string.Empty)">
+		<td>Equivalent Hourly Wage</td>
+		<td>@Model.Result.EquivalentWageRate.GetValueOrDefault().ToString("c")</td>
+	</tr>
+	<tr class="@(Model.Calculation == CompensationCalculatorViewModel.CalculationType.Rate ? "hidden" : string.Empty)">
+		<td>Equivalent Contract Rate</td>
+		<td>@Model.Result.EquivalentContractRate.GetValueOrDefault().ToString("c")</td>
+	</tr>
+</table>

@@ -28,5 +28,6 @@ namespace TampaBayCoders.Models
 		public bool ResultCheck { get; set; }
 		public TaxProfile TaxProfile { get; internal set; }
 		public int HoursOffPerYear { get; internal set; }
+		public decimal ResultComparison { get; internal set; }
 	}
 }
