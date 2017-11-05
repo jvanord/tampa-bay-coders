@@ -5,6 +5,6 @@
 [![GitHub forks](https://img.shields.io/github/forks/jvanord/tampa-bay-coders.svg)](https://github.com/jvanord/tampa-bay-coders/network)
 [![GitHub stars](https://img.shields.io/github/stars/jvanord/tampa-bay-coders.svg)](https://github.com/jvanord/tampa-bay-coders/stargazers)
 [![GitHub license](https://img.shields.io/github/license/jvanord/tampa-bay-coders.svg)](https://github.com/jvanord/tampa-bay-coders/blob/master/LICENSE)
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/jvanord/tampa-bay-coders.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fjvanord%2Ftampa-bay-coders)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/jvanord/tampa-bay-coders.svg?style=social)](https://twitter.com/intent/tweet?text=Help%20build%20the%20Tampa%20Bay%20Coders%20community%21&url=https%3A%2F%2Fgithub.com%2Fjvanord%2Ftampa-bay-coders)
 
 [TampaBayCoders.com](http://www.tampabaycoders.com)
