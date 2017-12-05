@@ -26,7 +26,7 @@
 			DISQUS SCRIPT - EDIT WITH CARE!
 		*/
 		var disqus_config = function () {
-			this.page.url = '@Url.Action("Index")';
+			this.page.url = '@Context.Request.Scheme://@Context.Request.Host@Context.Request.Path';
 			this.page.identifier = 'FORUM_HOME';
 		};
 		(function() { // DON'T EDIT BELOW THIS LINE
