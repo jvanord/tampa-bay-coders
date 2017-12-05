@@ -1,0 +1,40 @@
+﻿<div class="container">
+	<div class="alert alert-info">
+		<h2>
+			<span class="glyphicon glyphicon-info-sign"></span> 
+			Forums Coming Soon
+		</h2>
+		<p>
+			One of the main features we want to bring to this site is a community forum
+			where coders can share information and ideas.
+			While we gather the resources and do the research required to do this the right way,
+			please use the Disqus forum below to chat amongst yoursleves.
+			(Sorry, yes you will have to login to a 3rd-party service &mdash; for now.)
+		</p>
+		<p>
+			If you're interested in contributing to the development of our forums,
+			or if you just have a great idea you'd like to share with us,
+			get in touch through our <a asp-action="Contact" asp-controller="Home">Contact Page</a>.
+		</p>
+	</div>
+</div>
+
+<div class="container">
+	<div id="disqus_thread"></div>
+	<script>
+		/*
+			DISQUS SCRIPT - EDIT WITH CARE!
+		*/
+		var disqus_config = function () {
+			this.page.url = '@Url.Action("Index")';
+			this.page.identifier = 'FORUM_HOME';
+		};
+		(function() { // DON'T EDIT BELOW THIS LINE
+			var d = document, s = d.createElement('script');
+			s.src = 'https://tampa-bay-coders.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>

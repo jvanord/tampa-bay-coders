@@ -55,14 +55,22 @@
 					<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
 					<li><a asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="about">About</a></li>
 					<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-					<li class="hidden"><button class="btn btn-danger navbar-btn">Contribute</button></li>
+					<li>
+						<a asp-area="" asp-controller="Forums" asp-action="Index">
+							<span class="label label-primary">
+								<span class="glyphicon glyphicon-flash" title="New"></span>
+							</span>
+							&nbsp;
+							Forums
+						</a>
+					</li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-							Tools
 							<span class="label label-primary">
-								New
-								<span class="glyphicon glyphicon-flash"></span>
+								<span class="glyphicon glyphicon-flash" title="New"></span>
 							</span>
+							&nbsp;
+							Tools
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
@@ -70,6 +78,7 @@
 							<li><a asp-controller="Tools" asp-action="Diagnostics">Site Diagnostics</a></li>
 						</ul>
 					</li>
+					<li class="hidden"><button class="btn btn-danger navbar-btn">Contribute</button></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					@if (User.Identity.IsAuthenticated)
