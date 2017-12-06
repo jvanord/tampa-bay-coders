@@ -52,9 +52,17 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-					<li><a asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="about">About</a></li>
-					<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown">
+							Site
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+							<li><a asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="about">About</a></li>
+							<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+						</ul>
+					</li>
 					<li>
 						<a asp-area="" asp-controller="Forums" asp-action="Index">
 							<span class="label label-primary">
