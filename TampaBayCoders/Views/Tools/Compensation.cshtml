@@ -1,23 +1,31 @@
 @model CompensationCalculatorViewModel
 
+@section Styles{ 
+	<style>
+		#title { margin-bottom: 0; }
+		#beta { vertical-align: super; font-size: 14px; background-color: #db0000; }
+		#tagline { margin-top: 0; }
+	</style>
+}
 <div class="container">
 
-	<div class="content theme">
-		<h2>
-			Compensation Calculator<br />
-			<span class="label label-danger">Beta In-Progress</span>
+	<div class="theme">
+		<h2 id="title">
+			Compensation Calculator
+			<span id="beta" class="label label-default">Beta</span>
 		</h2>
+		<h3 id="tagline" class="text-center">How much is your compensation really worth?</h3>
 		<p class="text-center">
-			Ever wondered just how much your compensations is worth?
-			<br />
+			Ever wondered just how much your compensation is worth?
 			Need to do some math to compare disimilar employment offers?
+			Use this calculator to get some quick estimates of the total value of a compensation package.
 		</p>
 	</div>
 
 	<div class="alert alert-warning">
 		<h3>
-			<span class="glyphicon glyphicon-warning-sign"></span>
-			Attention
+			<span class="glyphicon glyphicon-warning-sign"> </span>
+			Disclaimer
 		</h3>
 		<p>
 			The calculations made by this tool are for information purposes only.
@@ -34,8 +42,12 @@
 		</h3>
 		<p>
 			This is an early version of the Compenstaion Calculator.
-			This version makes a lot of assumptions that future versions will allow you to customize,
-			such as benefits packages, tax profiles, etc.
+			This version makes a lot of assumptions about average benefits,
+			such as paid time off, IRA contributions, tax profiles, etc.
+		</p>
+		<p>
+			In the near future we will add features that will allow you to adjust some of these assumptions
+			to more closely match your specific individual circumstances.
 		</p>
 	</div>
 
@@ -113,7 +125,7 @@
 @section Scripts{
 	<script>
 		$(function () {
-			$('button').click(function (e) { $(this).append($('<i/>').addClass('fa fa-spinner fa-spin')); });
+			$('#accordion button').click(function (e) { $(this).append($('<i/>').addClass('fa fa-spinner fa-spin')); });
 			$('form').submit(function (e) {
 				e.preventDefault();
 				var $form = $(this);
@@ -121,13 +133,16 @@
 				$.post($form.attr('action'), $form.serialize())
 					.done(function (resultHtml) {
 						$('#results').html(resultHtml);
+						$('html, body').animate({
+							scrollTop: $('#results').offset().top
+						});
 					 })
 					.fail(function (e) {
 						debugger;
 						console.error('Post Error', e);
 						$('#results').html($('<h3/>').addClass('text-danger').text('Error Occured').html());
 					}).always(function (e) {
-						$('button>i').remove();
+						$('#accordion button>i').remove();
 					});
 			});
 		});
